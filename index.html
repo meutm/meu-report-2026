@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="logo/meu-logo-albastru-fara-scris.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEU Timișoara 2026 - Impact Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;--navy-mid:#1E3A5F;--navy-light:#2D5282;--navy-pale:#EEF2F8;
+  --gold:#C4A35A;--gold-light:#D9BF7A;--gold-pale:#F8F1E4;
+  --white:#FFFFFF;--off-white:#F9F8F5;--gray-50:#F3F2EE;--gray-100:#E8E6E0;
+  --gray-300:#C8C5BC;--gray-500:#8A8880;--gray-700:#4A4845;
+  --text:#1A1A1A;--text-light:#5A5755;--border:#E0DDD6;
+  --green:#1D5C42;--red:#7A1F1F;
+}
+body{font-family:'Helvetica Neue',Arial,-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.6}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;height:100vh;width:210px;background:var(--navy);z-index:1000;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:2rem}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2)}
+.sb-header{padding:1.5rem 1.25rem;border-bottom:0.5px solid rgba(255,255,255,0.1);margin-bottom:1rem}
+.sb-logo-text{font-size:12px;font-weight:600;color:var(--white);letter-spacing:0.04em}
+.sb-logo-sub{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px}
+.sb-badge{display:inline-block;background:rgba(196,163,90,0.2);color:var(--gold);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;margin-top:8px}
+.sb-section{font-size:8.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0.75rem 1.25rem 0.25rem}
+.sb-link{display:flex;align-items:center;gap:8px;padding:0.4rem 1.25rem;font-size:11.5px;color:rgba(255,255,255,0.6);text-decoration:none;border-left:2px solid transparent;transition:all 0.12s}
+.sb-link:hover,.sb-link.active{color:var(--white);background:rgba(255,255,255,0.06);border-left-color:var(--gold)}
+.sb-link .n{font-size:9px;opacity:0.4;min-width:16px}
+
+/* MAIN */
+.main{margin-left:210px}
+
+/* COVER */
+.cover{background:var(--navy);min-height:100vh;display:flex;flex-direction:column;padding:3.5rem 4rem;position:relative;overflow:hidden}
+.cover-accent{position:absolute;top:0;right:0;width:35%;height:100%;background:linear-gradient(150deg,rgba(196,163,90,0.06) 0%,transparent 55%);pointer-events:none}
+.cover-accent2{position:absolute;bottom:0;left:30%;width:600px;height:600px;border-radius:50%;background:rgba(30,58,95,0.4);transform:translate(0,50%);pointer-events:none}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:auto;padding-bottom:2rem}
+.cover-badge{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);border:0.5px solid rgba(196,163,90,0.4);padding:5px 14px}
+.cover-pat{text-align:right}
+.cover-pat-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+.cover-pat-val{font-size:11px;color:rgba(255,255,255,0.85);margin-top:3px}
+.cover-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 0}
+.cover-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.cover-h1{font-size:52px;font-weight:200;color:var(--white);line-height:1.08;margin-bottom:0.75rem}
+.cover-h1 strong{font-weight:600;display:block}
+.cover-sub{font-size:15px;color:rgba(255,255,255,0.65);max-width:500px;line-height:1.65;margin-bottom:3rem}
+.cover-kpis{display:flex;gap:3.5rem;flex-wrap:wrap}
+.cover-kpi{border-top:1px solid rgba(196,163,90,0.5);padding-top:1rem;min-width:80px}
+.cover-kpi-v{font-size:38px;font-weight:200;color:var(--white);line-height:1}
+.cover-kpi-l{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-top:5px}
+.cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.1)}
+.cover-info{font-size:10px;color:rgba(255,255,255,0.55);line-height:1.7}
+.cover-info strong{color:rgba(255,255,255,0.85);font-weight:500}
+
+/* SECTIONS */
+.section{padding:4.5rem 4rem;border-bottom:0.5px solid var(--border)}
+.section.alt{background:var(--off-white)}
+.sec-label{font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.sec-title{font-size:30px;font-weight:200;color:var(--navy);line-height:1.2;margin-bottom:0.4rem}
+.sec-title strong{font-weight:600}
+.sec-desc{font-size:13px;color:var(--text-light);max-width:640px;line-height:1.7;margin-bottom:2.5rem}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);margin-bottom:3rem}
+.kpi-cell{background:var(--white);padding:1.5rem 1.25rem}
+.kpi-cell.dk{background:var(--navy)}
+.kpi-cell.gd{background:var(--gold-pale)}
+.kpi-v{font-size:38px;font-weight:200;color:var(--navy);line-height:1;margin-bottom:3px}
+.kpi-cell.dk .kpi-v{color:var(--white)}
+.kpi-u{font-size:18px;font-weight:200;color:var(--gray-500)}
+.kpi-cell.dk .kpi-u{color:rgba(255,255,255,0.5)}
+.kpi-l{font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--gray-500);line-height:1.4}
+.kpi-cell.dk .kpi-l{color:rgba(255,255,255,0.55)}
+.kpi-s{font-size:10.5px;color:var(--gray-300);margin-top:3px}
+.kpi-cell.dk .kpi-s{color:rgba(255,255,255,0.4)}
+
+/* GRID LAYOUTS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+.g64{display:grid;grid-template-columns:3fr 2fr;gap:1.5rem;margin-bottom:1.5rem}
+.g46{display:grid;grid-template-columns:2fr 3fr;gap:1.5rem;margin-bottom:1.5rem}
+
+/* CARDS */
+.card{background:var(--white);border:0.5px solid var(--border);padding:1.5rem}
+.card.navy,.card.dk{background:var(--navy);border-color:var(--navy)}
+.card-t{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:3px}
+.card.navy .card-t,.card.dk .card-t{color:var(--gold)}
+.card-st{font-size:10.5px;color:var(--gray-500);margin-bottom:1.25rem}
+.card.navy .card-st,.card.dk .card-st{color:rgba(255,255,255,0.4)}
+.chart-wrap{position:relative}
+
+/* SCORE BARS */
+.score-list{margin-bottom:0.5rem}
+.score-row{display:flex;align-items:center;gap:1rem;padding:0.55rem 0;border-bottom:0.5px solid var(--border)}
+.score-row:last-child{border-bottom:none}
+.score-lbl{font-size:12px;color:var(--text);flex:1;min-width:0}
+.score-bar-bg{width:140px;height:3px;background:var(--gray-100);border-radius:1px;flex-shrink:0}
+.score-fill{height:100%;background:var(--navy);border-radius:1px}
+.score-fill.gold{background:var(--gold)}
+.score-val{font-size:12px;font-weight:600;color:var(--navy);min-width:36px;text-align:right}
+
+/* DATA TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-500);text-align:left;padding:.65rem 1rem;border-bottom:1px solid var(--gray-100);background:var(--gray-50)}
+.tbl td{padding:.6rem 1rem;border-bottom:0.5px solid var(--border);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--gray-50)}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+.tbl .pct{text-align:right;font-size:11px;color:var(--gray-500)}
+
+/* TAGS */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:.5rem}
+.tag{display:inline-block;border:0.5px solid var(--border);color:var(--gray-700);font-size:10.5px;padding:3px 10px}
+.tag.navy{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.tag.gold{background:var(--gold-pale);color:var(--navy);border-color:var(--gold-light)}
+.tag.sm{font-size:10px;padding:2px 8px}
+
+/* CALLOUT */
+.callout{border-left:3px solid var(--gold);padding:1.1rem 1.5rem;background:var(--gold-pale);margin-bottom:1.5rem}
+.callout-l{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.callout p{font-size:12.5px;color:var(--navy);line-height:1.65}
+
+/* PLATFORM CARDS */
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.pc{border:0.5px solid var(--border);background:var(--white);padding:1.25rem}
+.pc-num{font-size:24px;font-weight:200;color:var(--gray-300);margin-bottom:.5rem}
+.pc-name{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:.2rem}
+.pc-desc{font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:.75rem}
+.pc-url{font-size:9.5px;color:var(--gold);font-family:monospace;word-break:break-all}
+
+/* RECOMMENDATIONS */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem}
+.rec{border:0.5px solid var(--border);background:var(--white);padding:1.5rem;border-top-width:3px}
+.rec.p1{border-top-color:var(--navy)}
+.rec.p2{border-top-color:var(--gold)}
+.rec.p3{border-top-color:var(--gray-500)}
+.rec.p4{border-top-color:var(--gray-300)}
+.rec-pri{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.rec-t{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:.4rem}
+.rec-body{font-size:11.5px;color:var(--text-light);line-height:1.6}
+
+/* PARTNER PILLS */
+.partner-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2rem}
+.pill{display:inline-flex;align-items:center;border:0.5px solid var(--border);padding:.4rem 1rem;font-size:11.5px;color:var(--navy);font-weight:500}
+.pill.feat{border-color:var(--gold);background:var(--gold-pale)}
+.pill .dot{width:6px;height:6px;background:var(--gold);margin-right:6px}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:.75rem}
+.li{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-light)}
+.ld{width:10px;height:10px;border-radius:1px;flex-shrink:0}
+
+/* SUSTAINABILITY */
+.sus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.sus-card{border:0.5px solid var(--border);padding:1.25rem;background:var(--white)}
+.sus-icon{width:28px;height:28px;margin-bottom:.75rem;opacity:.7}
+.sus-title{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:.3rem}
+.sus-body{font-size:11.5px;color:var(--text-light);line-height:1.5}
+
+/* HR */
+hr.d{border:none;border-top:0.5px solid var(--border);margin:2rem 0}
+
+/* FOOTNOTE */
+.fn{font-size:10px;color:var(--gray-500);font-style:italic;margin-top:.5rem;line-height:1.5}
+
+/* DIRECTIVE PLACEHOLDER */
+.directive-placeholder{border:1px dashed var(--gray-300);padding:3rem 2rem;text-align:center;background:var(--gray-50)}
+.dp-title{font-size:13px;font-weight:500;color:var(--gray-500);margin-bottom:.5rem}
+.dp-sub{font-size:11px;color:var(--gray-300)}
+
+/* NPS bar */
+.nps-bar{display:flex;height:8px;margin:1rem 0;border-radius:1px;overflow:hidden}
+.nps-prom{background:var(--navy)}
+.nps-pass{background:var(--gray-300)}
+.nps-det{background:var(--red)}
+
+/* Donut center */
+.donut-wrap{position:relative}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.donut-v{font-size:22px;font-weight:300;color:var(--navy);line-height:1}
+.donut-l{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-500)}
+
+/* Financial cards */
+.fin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);margin-bottom:2rem}
+.fin-cell{background:var(--white);padding:1.5rem 1.25rem}
+.fin-cell.dk{background:var(--navy)}
+.fin-v{font-size:28px;font-weight:300;color:var(--navy);line-height:1;margin-bottom:3px}
+.fin-cell.dk .fin-v{color:var(--white)}
+.fin-l{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--gray-500)}
+.fin-cell.dk .fin-l{color:rgba(255,255,255,.4)}
+.fin-s{font-size:10.5px;color:var(--gray-300);margin-top:3px}
+.fin-cell.dk .fin-s{color:rgba(255,255,255,.25)}
+
+@media print{.sidebar{display:none}.main{margin-left:0}.section{break-inside:avoid}}
+@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.section{padding:2.5rem 1.5rem}.g2,.g3,.g64,.g46,.kpi-grid,.fin-grid{grid-template-columns:1fr}.platform-grid{grid-template-columns:1fr 1fr}.rec-grid{grid-template-columns:1fr}.sus-grid{grid-template-columns:1fr}}
+p{margin-bottom:.75rem}p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-header">
+    <div class="sb-logo-text">MEU Timișoara</div>
+    <div class="sb-logo-sub">Impact Report · 2026</div>
+    <div class="sb-badge">First Edition</div>
+  </div>
+  <div class="sb-section">Overview</div>
+  <a href="#cover" class="sb-link active"><span class="n">-</span> Cover</a>
+  <a href="#exec" class="sb-link"><span class="n">00</span> Executive Summary</a>
+  <div class="sb-section">The Event</div>
+  <a href="#overview" class="sb-link"><span class="n">01</span> Event Overview</a>
+  <a href="#participation" class="sb-link"><span class="n">02</span> Participation</a>
+  <a href="#simulation" class="sb-link"><span class="n">03</span> The Simulation</a>
+  <a href="#workshops" class="sb-link"><span class="n">04</span> Workshops</a>
+  <div class="sb-section">Operations</div>
+  <a href="#digital" class="sb-link"><span class="n">05</span> Digital Infrastructure</a>
+  <a href="#logistics" class="sb-link"><span class="n">06</span> Logistics</a>
+  <a href="#social" class="sb-link"><span class="n">07</span> Social Programme</a>
+  <div class="sb-section">Impact</div>
+  <a href="#feedback" class="sb-link"><span class="n">08</span> Participant Feedback</a>
+  <a href="#socialmedia" class="sb-link"><span class="n">09</span> Social Media</a>
+  <a href="#financial" class="sb-link"><span class="n">10</span> Financial & Economic</a>
+  <a href="#sustainability" class="sb-link"><span class="n">11</span> Sustainability</a>
+  <div class="sb-section">Forward</div>
+  <a href="#recommendations" class="sb-link"><span class="n">12</span> Recommendations</a>
+  <a href="#directives" class="sb-link"><span class="n">A</span> Appendix: Directives</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- COVER -->
+<section class="cover" id="cover">
+  <div class="cover-accent"></div>
+  <div class="cover-accent2"></div>
+  <div class="cover-top">
+    <div class="cover-badge">Impact Report · First Edition</div>
+    <div class="cover-pat">
+      <div class="cover-pat-label">Under the High Patronage of</div>
+      <div class="cover-pat-val">The European Parliament</div>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Model European Union · Timișoara · Romania</div>
+    <div class="cover-h1">MEU Timișoara<strong>2026</strong></div>
+    <div class="cover-sub">A first-of-its-kind legislative simulation conference - 70 young Europeans, 15 countries, 5 days of debate, negotiation, and democratic practice in the heart of Timișoara.</div>
+    <div class="cover-kpis">
+      <div class="cover-kpi"><div class="cover-kpi-v">70</div><div class="cover-kpi-l">Participants</div></div>
+      <div class="cover-kpi"><div class="cover-kpi-v">15</div><div class="cover-kpi-l">Countries</div></div>
+      <div class="cover-kpi"><div class="cover-kpi-v">5</div><div class="cover-kpi-l">Days</div></div>
+      <div class="cover-kpi"><div class="cover-kpi-v">8.73</div><div class="cover-kpi-l">Avg. Rating /10</div></div>
+      <div class="cover-kpi"><div class="cover-kpi-v">73</div><div class="cover-kpi-l">NPS Score</div></div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-info">
+      <strong>25 – 29 March 2026</strong><br>
+      Universitatea de Vest din Timișoara · ICAM<br>
+      Timișoara, Romania
+    </div>
+    <div class="cover-info" style="text-align:right">
+      <strong>Director General</strong><br>
+      Viorel Lambu<br>
+      <span style="color:rgba(255,255,255,0.45)">Erasmus+ · Co-funded by the European Union</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXEC SUMMARY -->
+<section class="section" id="exec">
+  <div class="sec-label">Executive Summary</div>
+  <div class="sec-title">A first edition that <strong>set the standard</strong></div>
+  <div class="sec-desc">MEU Timișoara 2026 was the first Model European Union conference at this scale ever held in Romania - and by the metrics that matter, it delivered. From NPS to educational impact, from logistical execution to sustainability commitment, the data paints a picture of an event that substantially exceeded expectations for a debut edition.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-cell dk">
+      <div class="kpi-v">8.73<span class="kpi-u">/10</span></div>
+      <div class="kpi-l">Overall Experience Rating</div>
+      <div class="kpi-s">Median 9 · Min 6 · Max 10</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-v">73</div>
+      <div class="kpi-l">Net Promoter Score</div>
+      <div class="kpi-s">17 Promoters · 4 Passives · 1 Detractor</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-v">95<span class="kpi-u">%</span></div>
+      <div class="kpi-l">Expectations Met or Exceeded</div>
+      <div class="kpi-s">50% significantly exceeded</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-v">100</div>
+      <div class="kpi-l">Applications Received</div>
+      <div class="kpi-s">70 selected · 30% selectivity</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-v">59<span class="kpi-u">%</span></div>
+      <div class="kpi-l">EU Career Path Significantly Influenced</div>
+      <div class="kpi-s">86% positively influenced overall</div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Simulation Quality</div>
+      <div class="card-st">Learning experience rating</div>
+      <div style="font-size:36px;font-weight:200;color:var(--navy);line-height:1">4.45<span style="font-size:18px;color:var(--gray-500)">/5</span></div>
+      <p style="font-size:11.5px;color:var(--text-light);margin-top:.5rem">Two directives debated in parallel chambers - Schengen Military Corridor and MyHealth@EU - with full procedural fidelity including amendments, points of information, and plenary votes.</p>
+    </div>
+    <div class="card">
+      <div class="card-t">Organising Team</div>
+      <div class="card-st">Quality rating from participants</div>
+      <div style="font-size:36px;font-weight:200;color:var(--navy);line-height:1">4.45<span style="font-size:18px;color:var(--gray-500)">/5</span></div>
+      <p style="font-size:11.5px;color:var(--text-light);margin-top:.5rem">An independent team of students from Universitatea de Vest delivered a logistically complex international event, earning strong marks across every operational dimension.</p>
+    </div>
+    <div class="card">
+      <div class="card-t">Digital Infrastructure</div>
+      <div class="card-st">Platforms deployed for the event</div>
+      <div style="font-size:36px;font-weight:200;color:var(--navy);line-height:1">9</div>
+      <p style="font-size:11.5px;color:var(--text-light);margin-top:.5rem">From participant guide to certificate generator, amendment portal to delegate awards - a fully paperless ecosystem supporting every stage of the event lifecycle.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Key Insight</div>
+    <p>The single most consistent takeaway across all 22 feedback responses was not a skill or a piece of knowledge - it was <strong>the people</strong>. Professional and personal connections formed during the event were cited as the primary value by 9 of 22 respondents. This signals that MEU Timișoara's primary product is not the simulation itself, but the network it creates.</p>
+  </div>
+</section>
+
+<!-- EVENT OVERVIEW -->
+<section class="section alt" id="overview">
+  <div class="sec-label">Section 01</div>
+  <div class="sec-title"><strong>Event Overview</strong></div>
+  <div class="sec-desc">Context, purpose, and institutional positioning of MEU Timișoara 2026.</div>
+
+  <div class="g64">
+    <div>
+      <p style="font-size:13px;line-height:1.75;color:var(--text)">Model European Union Timișoara 2026 was the <strong>first MEU conference in Romania at this scale</strong> - and the first in a city whose democratic history makes it a uniquely appropriate venue. Timișoara, which ignited the 1989 Romanian Revolution, hosted its first European legislative simulation as part of the prestigious MEU conference series previously held in Spain, the Netherlands, Germany, Portugal, and Poland.</p>
+      <p style="font-size:13px;line-height:1.75;color:var(--text)">The event brought together 70 students and young professionals from 15 countries over five days, placing them in the roles of Members of the European Parliament and Council Ministers. The two chambers debated and voted on real EU legislative proposals, following authentic procedural rules.</p>
+      <p style="font-size:13px;line-height:1.75;color:var(--text)">The event was co-funded by the European Union via the Erasmus+ programme and held under the High Patronage of the European Parliament - the first time a Romanian MEU has received this distinction.</p>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-t">Event Facts</div>
+        <div class="card-st">At a glance</div>
+        <table class="tbl">
+          <tr><td style="color:var(--gray-500);font-size:11px">Dates</td><td style="font-size:12px;text-align:right;font-weight:500">25 – 29 March 2026</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Duration</td><td style="font-size:12px;text-align:right;font-weight:500">5 days</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Venues</td><td style="font-size:12px;text-align:right;font-weight:500">UVT · ICAM</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Applications</td><td style="font-size:12px;text-align:right;font-weight:500">100</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Selected</td><td style="font-size:12px;text-align:right;font-weight:500">70</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Edition</td><td style="font-size:12px;text-align:right;font-weight:500">First (inaugural)</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Director General</td><td style="font-size:12px;text-align:right;font-weight:500">Viorel Lambu</td></tr>
+          <tr><td style="color:var(--gray-500);font-size:11px">Project Manager</td><td style="font-size:12px;text-align:right;font-weight:500">Paula Iovescu</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="d">
+  <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem">Institutional Partners &amp; Supporters</div>
+  <div class="partner-row">
+    <div class="pill feat"><div class="dot"></div>European Parliament - High Patronage</div>
+    <div class="pill feat"><div class="dot"></div>Erasmus+ - Co-funded by the EU</div>
+    <div class="pill">Universitatea de Vest din Timișoara</div>
+    <div class="pill">Europe Direct Timișoara</div>
+    <div class="pill">F.I.T.T. - Fundația Județeană pentru Tineret Timiș</div>
+    <div class="pill">Primăria Timișoara</div>
+    <div class="pill">Consiliul Județean Timiș</div>
+  </div>
+  <p class="fn">All strategic partners hold values aligned with the European project and demonstrate CSR activities consistent with the event's ethical and civic direction. Food products consumed during the event carry the Rainforest Alliance certification (Broasca Verde), indicating sustainable sourcing and respect for farmer rights.</p>
+</section>
+
+<!-- PARTICIPATION -->
+<section class="section" id="participation">
+  <div class="sec-label">Section 02</div>
+  <div class="sec-title">Participation &amp; <strong>Geographic Reach</strong></div>
+  <div class="sec-desc">70 participants representing 15 countries across Europe - and beyond.</div>
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr)">
+    <div class="kpi-cell dk"><div class="kpi-v">70</div><div class="kpi-l">Total Participants</div><div class="kpi-s">Selected from 100 applicants</div></div>
+    <div class="kpi-cell"><div class="kpi-v">15</div><div class="kpi-l">Countries Represented</div><div class="kpi-s">14 EU + 1 beyond</div></div>
+    <div class="kpi-cell"><div class="kpi-v">43</div><div class="kpi-l">Erasmus+ Participants</div><div class="kpi-s">With YouthPass recognition</div></div>
+    <div class="kpi-cell"><div class="kpi-v">26</div><div class="kpi-l">MEPs Simulated</div><div class="kpi-s">European Parliament chamber</div></div>
+    <div class="kpi-cell"><div class="kpi-v">17</div><div class="kpi-l">Council Ministers</div><div class="kpi-s">EU Council chamber</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Participants by Country of Origin</div>
+      <div class="card-st">Confirmed delegation, N = 53 confirmed roles (70 incl. org team)</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="chartCountry"></canvas></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-t">Role Distribution</div>
+        <div class="card-st">By institutional chamber</div>
+        <div class="g2" style="margin-bottom:0">
+          <div class="donut-wrap" style="height:160px">
+            <canvas id="chartRoles"></canvas>
+            <div class="donut-center"><div class="donut-v">70</div><div class="donut-l">Total</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;justify-content:center;gap:8px">
+            <div class="legend"><div class="li"><div class="ld" style="background:#0A1628"></div>EP - 26 MEPs (37%)</div></div>
+            <div class="legend"><div class="li"><div class="ld" style="background:#C4A35A"></div>Council - 17 Ministers (24%)</div></div>
+            <div class="legend"><div class="li"><div class="ld" style="background:#D1CFC6"></div>Content / Press / Org - 27 (39%)</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-t">Participant Target Profile</div>
+        <div class="card-st">Selection criteria</div>
+        <div class="tag-wrap">
+          <span class="tag">Ages 20 – 30</span>
+          <span class="tag">Students & graduates</span>
+          <span class="tag">Law · Political Science</span>
+          <span class="tag">Sociology · Psychology</span>
+          <span class="tag">Economics · HR</span>
+          <span class="tag">Letters · Communication</span>
+          <span class="tag">B2+ English</span>
+          <span class="tag">Civic engagement</span>
+          <span class="tag">Soft skills focus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Accommodation Split</div>
+      <div class="card-st">Confirmed participants, N = 53</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartAccom"></canvas>
+        <div class="donut-center"><div class="donut-v" style="font-size:18px">53</div><div class="donut-l">Confirmed</div></div>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Cămin Camelia - 36 (67,9%)</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Clădirea FITT - 6 (11.3%)</div>
+        <div class="li"><div class="ld" style="background:#D1CFC6"></div>Own accommodation - 11 (20.8%)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Erasmus+ Participation</div>
+      <div class="card-st">Funding status, N = 53 confirmed</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartErasmus"></canvas>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Erasmus+ participant - 43 (81%)</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Meals only - 1 (2%)</div>
+        <div class="li"><div class="ld" style="background:#D1CFC6"></div>Non-Erasmus - 9 (17%)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Previous Simulation Experience</div>
+      <div class="card-st">From feedback survey, N = 22</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartExp"></canvas>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>First ever - 40% (9)</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>1 – 2 previous - 45% (10)</div>
+        <div class="li"><div class="ld" style="background:#D1CFC6"></div>3+ experienced - 14% (3)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Geographic Impact</div>
+    <p>Participants from 15 countries - Romania, Spain, Poland, France, Portugal, Italy, North Macedonia, Austria, Bulgaria, Bosnia &amp; Herzegovina, United Kingdom, Northern Ireland, Slovakia, Japan, and others - had the opportunity to discover Timișoara: its architecture, squares, cultural heritage, and identity as a European Capital of Culture (2023). For the majority, this was their first visit to Romania.</p>
+  </div>
+</section>
+
+<!-- SIMULATION -->
+<section class="section alt" id="simulation">
+  <div class="sec-label">Section 03</div>
+  <div class="sec-title">The <strong>Simulation</strong></div>
+  <div class="sec-desc">The core product: a full simulation of the EU ordinary legislative procedure, with two chambers debating two directives simultaneously over five days.</div>
+
+  <div class="g2">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div class="card-t">Topic 1 · Defence</div>
+      <div class="card-st" style="margin-bottom:.75rem">Directive on the Schengen Military Hallway</div>
+      <p style="font-size:12px;line-height:1.65;color:var(--text-light)">A proposal establishing a Military Schengen framework to harmonise cross-border transit rules within the EU - eliminating administrative bottlenecks and ensuring rapid deployment of defence capabilities. Highly relevant given current geopolitical context.</p>
+      <div class="tag-wrap" style="margin-top:.75rem"><span class="tag sm">Defence</span><span class="tag sm">Geopolitics</span><span class="tag sm">Schengen</span><span class="tag sm">Military transit</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div class="card-t">Topic 2 · Digital Health</div>
+      <div class="card-st" style="margin-bottom:.75rem">Directive on MyHealth@EU</div>
+      <p style="font-size:12px;line-height:1.65;color:var(--text-light)">A proposal for a European Health Data Space enabling secure cross-border access to personal health data - improving care continuity, research, and crisis response across member states. Generated the most sophisticated legislative debate of the event.</p>
+      <div class="tag-wrap" style="margin-top:.75rem"><span class="tag sm">Digital health</span><span class="tag sm">Data sharing</span><span class="tag sm">Cross-border</span><span class="tag sm">Patient rights</span></div>
+    </div>
+  </div>
+
+  <hr class="d">
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Participant Preparation for Assigned Role</div>
+      <div class="card-st">From feedback survey, N = 22</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chartPrep"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-t">EU Understanding Improvement</div>
+      <div class="card-st">Self-assessed learning outcome, N = 22</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chartEU"></canvas></div>
+      <div class="fn">Average: 3.82/5 · 64% reported level 4–5 (meaningfully illuminating)</div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Overall Simulation Quality</div>
+      <div class="card-st">As a learning experience, 1–5 scale</div>
+      <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1;margin:.5rem 0">4.45<span style="font-size:20px;color:var(--gray-500)">/5</span></div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">Score 5 (Excellent)</span><div class="score-bar-bg"><div class="score-fill" style="width:68%"></div></div><span class="score-val">68%</span></div>
+        <div class="score-row"><span class="score-lbl">Score 4 (Good)</span><div class="score-bar-bg"><div class="score-fill" style="width:23%"></div></div><span class="score-val">23%</span></div>
+        <div class="score-row"><span class="score-lbl">Score 3 (Average)</span><div class="score-bar-bg"><div class="score-fill" style="width:9%"></div></div><span class="score-val">9%</span></div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 2">
+      <div class="card-t">Simulation Aspects - All Dimensions Rated</div>
+      <div class="card-st">5-point matrix · 22 respondents · All scored 5.0/5</div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">Realism of the EU legislative process</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Quality of preparation by fellow participants</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Relevance and complexity of policy topics</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Effectiveness of chairs and facilitators</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Quality of the press corps / media coverage</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Clarity and fairness of rules of procedure</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Pacing - debate, amendment and voting balance</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+      </div>
+      <p class="fn">Matrix responses uniformly maximally positive. Qualitative responses (Q10) surface nuances around directive distribution timing and cross-chamber coordination.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Most Challenging Moments - Qualitative Analysis</div>
+    <p>Respondents described their most intellectually demanding moments as: drafting legally precise amendments under time pressure; negotiating cross-ideological support; defending positions under sustained points of information; and discovering in real time that their understanding of a procedural point was incomplete. These moments were universally described in positive terms - as the most memorable and formative parts of the simulation.</p>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section class="section" id="workshops">
+  <div class="sec-label">Section 04</div>
+  <div class="sec-title">Workshops &amp; <strong>Guest Speakers</strong></div>
+  <div class="sec-desc">Three expert sessions delivered by senior EU figures - rated uniformly excellent, with direct positive impact on simulation performance.</div>
+
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div class="card-t">Workshop I</div>
+      <div style="font-size:16px;font-weight:500;color:var(--navy);margin:.25rem 0">Alina Gîrbea</div>
+      <div style="font-size:11px;color:var(--gray-500);margin-bottom:1rem">Wednesday, 25 March 2026</div>
+      <p style="font-size:12px;line-height:1.6;color:var(--text-light)">A technically rigorous session providing in-depth institutional and legislative context. Participants cited the workshop for its precision and depth of content, particularly appreciated by those already familiar with EU processes.</p>
+      <div style="margin-top:1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:28px;font-weight:200;color:var(--navy)">5.0</span><span style="font-size:12px;color:var(--gray-500)">/5 · All respondents</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div class="card-t">Workshop II</div>
+      <div style="font-size:16px;font-weight:500;color:var(--navy);margin:.25rem 0">Nicu Ștefănuță</div>
+      <div style="font-size:11px;color:var(--gray-500);margin-bottom:1rem">Thursday, 26 March 2026</div>
+      <p style="font-size:12px;line-height:1.6;color:var(--text-light)">Most frequently cited as the highest-impact session (6 direct mentions as most impactful). Described as authentic, open to dialogue, and personally inspiring - even in a shorter format. Nicu Ștefănuță's first-person EP perspective left a lasting impression.</p>
+      <div style="margin-top:1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:28px;font-weight:200;color:var(--navy)">5.0</span><span style="font-size:12px;color:var(--gray-500)">/5 · All respondents</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gray-300)">
+      <div class="card-t">Workshop III</div>
+      <div style="font-size:16px;font-weight:500;color:var(--navy);margin:.25rem 0">Simina Tulbure</div>
+      <div style="font-size:11px;color:var(--gray-500);margin-bottom:1rem">Thursday, 26 March 2026</div>
+      <p style="font-size:12px;line-height:1.6;color:var(--text-light)">Highly valued for extended dialogue time and discussion of European federalism. Participants highlighted the opportunity to express their own views on the future of European integration - a format that felt collaborative rather than lecture-based.</p>
+      <div style="margin-top:1rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:28px;font-weight:200;color:var(--navy)">5.0</span><span style="font-size:12px;color:var(--gray-500)">/5 · All respondents</span></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Workshop–Simulation Integration</div>
+      <div class="card-st">How well workshops prepared participants for simulation, N = 22</div>
+      <div class="chart-wrap" style="height:160px"><canvas id="chartWorkshopInt"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Suggested Future Speakers &amp; Topics</div>
+      <div class="card-st">From Q15 open responses</div>
+      <div class="tag-wrap">
+        <span class="tag gold">EU ambassadors &amp; foreign policy experts</span>
+        <span class="tag gold">Western Balkans enlargement</span>
+        <span class="tag gold">Speakers from non-EU candidate countries</span>
+        <span class="tag gold">Brexit specialists</span>
+        <span class="tag">Various EP political group representatives</span>
+        <span class="tag">Immigration policy experts</span>
+        <span class="tag">EU constitutional / federalism debate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL INFRASTRUCTURE -->
+<section class="section alt" id="digital">
+  <div class="sec-label">Section 05</div>
+  <div class="sec-title"><strong>Digital Infrastructure</strong></div>
+  <div class="sec-desc">Nine purpose-built web platforms covered every stage of the participant journey - from application to certificate - with zero reliance on printed materials.</div>
+
+  <div class="platform-grid">
+    <div class="pc">
+      <div class="pc-num">01</div>
+      <div class="pc-name">Main Event Website</div>
+      <div class="pc-desc">Public-facing site with event details, topics, programme, speakers, FAQ, and location. Bilingual (RO/EN).</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">02</div>
+      <div class="pc-name">Sponsorship Portal</div>
+      <div class="pc-desc">Dedicated partner acquisition site with package tiers, event metrics, and contact form. Used for all sponsor outreach.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-sponsors/</div>
+    </div>
+    <div class="pc" style="border-color:var(--gold-light);background:var(--gold-pale)">
+      <div class="pc-num" style="color:var(--gold)">03</div>
+      <div class="pc-name">Participant Guide App</div>
+      <div class="pc-desc">Progressive web app used by 86% of participants as primary reference throughout the event. Includes daily agenda, venue maps, transport routes, EU map, hemicycle seating, and emergency contacts.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-participants/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">04</div>
+      <div class="pc-name">Certificate Generator</div>
+      <div class="pc-desc">Automated diploma generation for attendance certificates - personalised, downloadable, no paper required.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-certificate-generator/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">05</div>
+      <div class="pc-name">Delegate Awards</div>
+      <div class="pc-desc">Live voting platform for Best Delegate and other peer-voted recognition categories.</div>
+      <div class="pc-url">meutm.github.io/meu-voting/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">06</div>
+      <div class="pc-name">Feedback Form</div>
+      <div class="pc-desc">50-question structured survey covering all ten dimensions of the participant experience. Generated 22 complete responses for post-event analysis.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-feedback/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">07</div>
+      <div class="pc-name">Amendment Portal</div>
+      <div class="pc-desc">Centralised submission and tracking system for legislative amendments - maintaining parliamentary process fidelity in a digital-first format.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-amendment-portal/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">08</div>
+      <div class="pc-name">Participation Agreement</div>
+      <div class="pc-desc">Digital signature and generation of the formal participation agreement - binding confirmation replacing paper contracts entirely.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-agreement/</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">09</div>
+      <div class="pc-name">Position Papers Upload</div>
+      <div class="pc-desc">Secure submission portal for position papers - structured pre-event research submissions from all MEPs and Ministers.</div>
+      <div class="pc-url">meutm.github.io/meu-timisoara-position-papers/</div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Guide App Usage Frequency</div>
+      <div class="card-st">N = 22 feedback respondents</div>
+      <div class="chart-wrap" style="height:140px"><canvas id="chartGuide"></canvas></div>
+      <p class="fn">86% used it as their primary reference throughout the event</p>
+    </div>
+    <div class="card">
+      <div class="card-t">Added to Home Screen</div>
+      <div class="card-st">PWA install rate, N = 22</div>
+      <div class="chart-wrap" style="height:140px"><canvas id="chartPWA"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Preferred Format</div>
+      <div class="card-st">Digital vs. printed, N = 22</div>
+      <div class="chart-wrap" style="height:140px"><canvas id="chartPrint"></canvas></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Sustainability Note</div>
+    <p>The deployment of 9 digital platforms eliminated the need for any printed materials - programme booklets, participant guides, position paper copies, certificates, and agreements were all handled entirely online. One participant explicitly stated they actively preferred the digital format on environmental grounds: <em>"DO NOT PRINT - I do not support waste."</em></p>
+  </div>
+</section>
+
+<!-- LOGISTICS -->
+<section class="section" id="logistics">
+  <div class="sec-label">Section 06</div>
+  <div class="sec-title">Logistics, Accommodation <strong>&amp; Meals</strong></div>
+  <div class="sec-desc">The daily infrastructure that determined participants' baseline experience from arrival to final day.</div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Meals Quality</div>
+      <div class="card-st">Participant rating, 1–5 scale, N = 22</div>
+      <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1;margin:.5rem 0">4.45<span style="font-size:20px;color:var(--gray-500)">/5</span></div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">Score 5</span><div class="score-bar-bg"><div class="score-fill" style="width:68%"></div></div><span class="score-val">68%</span></div>
+        <div class="score-row"><span class="score-lbl">Score 4</span><div class="score-bar-bg"><div class="score-fill" style="width:18%"></div></div><span class="score-val">18%</span></div>
+        <div class="score-row"><span class="score-lbl">Score 3</span><div class="score-bar-bg"><div class="score-fill" style="width:14%"></div></div><span class="score-val">14%</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Dietary Requirements</div>
+      <div class="card-st">Accommodation of special needs, N = 22</div>
+      <div class="chart-wrap" style="height:140px"><canvas id="chartDiet"></canvas></div>
+      <p class="fn">Notable: gluten-free and halal diets both explicitly and fully accommodated - cited positively by affected participants.</p>
+    </div>
+    <div class="card">
+      <div class="card-t">Public Transport Navigation</div>
+      <div class="card-st">Ease of travel, accommodation → venues, N = 22</div>
+      <div class="chart-wrap" style="height:140px"><canvas id="chartTransport"></canvas></div>
+      <p class="fn">Dedicated transport guide section in participant app included exact routes, timetables, and stops. Avg. ride-share (alternative) ≈ 15 RON/trip.</p>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Accommodation Experience - All Aspects</div>
+      <div class="card-st">5-point matrix · All dimensions scored 5.0/5</div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">Room cleanliness</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Sleeping comfort</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Access to facilities</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Check-in process</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Room assignment suitability</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Safe Person Mechanism</div>
+      <div class="card-st">Participant experience with wellbeing structure, N = 22</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="chartSafe"></canvas></div>
+      <p class="fn">Recommendation from Q49: increase Safe Person visibility in-session, introduce anonymous per-session reporting, and clarify the mechanism in the opening briefing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROGRAMME -->
+<section class="section alt" id="social">
+  <div class="sec-label">Section 07</div>
+  <div class="sec-title">Social <strong>Programme</strong></div>
+  <div class="sec-desc">Four social events over five days - designed to build connections outside the simulation chamber.</div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Social Event Attendance</div>
+      <div class="card-st">Multi-select, N = 22 respondents</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartSocialAtt"></canvas></div>
+    </div>
+    <div>
+      <div class="g2" style="margin-bottom:1rem">
+        <div class="card">
+          <div class="card-t">Gala Night</div>
+          <div style="font-size:28px;font-weight:200;color:var(--navy)">87%</div>
+          <div style="font-size:11px;color:var(--gray-500)">attended</div>
+        </div>
+        <div class="card">
+          <div class="card-t">Karaoke Night</div>
+          <div style="font-size:28px;font-weight:200;color:var(--navy)">77%</div>
+          <div style="font-size:11px;color:var(--gray-500)">attended</div>
+        </div>
+        <div class="card">
+          <div class="card-t">#altfelclub Night</div>
+          <div style="font-size:28px;font-weight:200;color:var(--navy)">68%</div>
+          <div style="font-size:11px;color:var(--gray-500)">attended</div>
+        </div>
+        <div class="card">
+          <div class="card-t">Football Match</div>
+          <div style="font-size:28px;font-weight:200;color:var(--navy)">36%</div>
+          <div style="font-size:11px;color:var(--gray-500)">attended</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-t">Social / Simulation Balance</div>
+        <div class="card-st">How well the programme complemented simulation work</div>
+        <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1">4.36<span style="font-size:20px;color:var(--gray-500)">/5</span></div>
+        <p class="fn">73% of respondents found entry fees clear and fair. Karaoke was cited as the most effective connection-building format.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Qualitative Insight - Social Events</div>
+    <p>Karaoke at Charlis Pub was consistently identified as the highest-connection-quality event. Several respondents noted that separating participants across two accommodation sites (Cămin Camelia and FITT) reduced group cohesion during the event - some informal socialising defaulted to national sub-groups as a result. A shared closing meal or social gathering on the final evening was the most frequently suggested addition for 2027.</p>
+  </div>
+</section>
+
+<!-- PARTICIPANT FEEDBACK -->
+<section class="section" id="feedback">
+  <div class="sec-label">Section 08</div>
+  <div class="sec-title">Participant <strong>Feedback Analysis</strong></div>
+  <div class="sec-desc">22 complete responses across 50 questions in 10 thematic sections. Response collected anonymously via a dedicated feedback platform.</div>
+
+  <div class="g3" style="margin-bottom:2rem">
+    <div class="card dk">
+      <div class="card-t">Overall Rating</div>
+      <div style="font-size:48px;font-weight:200;color:var(--white);line-height:1">8.73<span style="font-size:22px;color:rgba(255,255,255,.6)">/10</span></div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">Median 9 · 22 responses · Scale 1 – 10</div>
+    </div>
+    <div class="card">
+      <div class="card-t">Net Promoter Score</div>
+      <div style="font-size:48px;font-weight:200;color:var(--navy);line-height:1">73</div>
+      <div class="nps-bar">
+        <div class="nps-prom" style="flex:17"></div>
+        <div class="nps-pass" style="flex:4"></div>
+        <div class="nps-det" style="flex:1"></div>
+      </div>
+      <div style="display:flex;gap:1rem;font-size:10px;color:var(--gray-500)"><span>Promoters 17</span><span>Passives 4</span><span>Detractors 1</span></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Expectations</div>
+      <div class="chart-wrap" style="height:100px"><canvas id="chartExpectations"></canvas></div>
+      <div class="legend" style="margin-top:.5rem;flex-direction:column;gap:3px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Significantly exceeded - 50%</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Met - 45%</div>
+        <div class="li"><div class="ld" style="background:#D1CFC6"></div>Partially met - 5%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g64">
+    <div class="card">
+      <div class="card-t">Overall Rating Distribution</div>
+      <div class="card-st">N = 22 · Scale 1 – 10</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="chartRatingDist"></canvas></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-t">How Participants Heard About MEU</div>
+        <div class="card-st">Multi-select, N = 22</div>
+        <div class="score-list">
+          <div class="score-row"><span class="score-lbl">Friend / colleague referral</span><div class="score-bar-bg"><div class="score-fill" style="width:80%"></div></div><span class="score-val">80%</span></div>
+          <div class="score-row"><span class="score-lbl">Instagram / social media</span><div class="score-bar-bg"><div class="score-fill" style="width:40%"></div></div><span class="score-val">40%</span></div>
+          <div class="score-row"><span class="score-lbl">Student organisations</span><div class="score-bar-bg"><div class="score-fill" style="width:7%"></div></div><span class="score-val">7%</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-t">EU Career Influence</div>
+        <div class="card-st">N = 22</div>
+        <div class="score-list">
+          <div class="score-row"><span class="score-lbl">Significantly influenced</span><div class="score-bar-bg"><div class="score-fill" style="width:59%"></div></div><span class="score-val">59%</span></div>
+          <div class="score-row"><span class="score-lbl">Deepened interest</span><div class="score-bar-bg"><div class="score-fill" style="width:27%"></div></div><span class="score-val">27%</span></div>
+          <div class="score-row"><span class="score-lbl">Already decided</span><div class="score-bar-bg"><div class="score-fill" style="width:5%"></div></div><span class="score-val">5%</span></div>
+          <div class="score-row"><span class="score-lbl">More realistic now</span><div class="score-bar-bg"><div class="score-fill" style="width:5%"></div></div><span class="score-val">5%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="d">
+
+  <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:1.25rem">Skills &amp; Competencies Actively Practised (Q39) - N = 22</div>
+  <div class="card">
+    <div class="chart-wrap" style="height:400px"><canvas id="chartSkills"></canvas></div>
+    <p class="fn">Participants were asked which skills they actively practised - not aspirationally but experientially. Formal public speaking, active listening, research, and negotiation lead with 18–19/22 mentions.</p>
+  </div>
+
+  <hr class="d">
+
+  <div class="g2" style="margin-top:1.5rem">
+    <div class="card">
+      <div class="card-t">Organising Team Rating</div>
+      <div class="card-st">Overall quality, 1–5 scale, N = 22</div>
+      <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1;margin:.5rem 0">4.45<span style="font-size:20px;color:var(--gray-500)">/5</span></div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">Pre-event communication</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Programme clarity</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Team responsiveness during event</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Handling last-minute changes</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Opening ceremony</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Closing ceremony</span><div class="score-bar-bg"><div class="score-fill" style="width:100%"></div></div><span class="score-val">5.0</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Personal Impact Dimensions (Q38)</div>
+      <div class="card-st">Self-assessed impact, 1–5 matrix, N = 22 - All rated 5.0/5</div>
+      <div class="score-list">
+        <div class="score-row"><span class="score-lbl">EU institutions understanding</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Public speaking &amp; argumentation</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Negotiation &amp; consensus-building</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Cross-cultural communication</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Quality of connections made</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+        <div class="score-row"><span class="score-lbl">Self-confidence in formal settings</span><div class="score-bar-bg"><div class="score-fill gold" style="width:100%"></div></div><span class="score-val" style="color:var(--gold)">5.0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1.5rem">
+    <div class="callout-l">Most Valuable Takeaway - Dominant Theme</div>
+    <p>When asked "what is the single most valuable thing you take away from MEU Timișoara 2026?", 9 of 22 respondents cited <strong>people and connections</strong> - explicitly. The remaining responses centred on perspective-taking, the ability to argue across ideological lines, and a realistic self-assessment of political aptitude. The event's primary product, from participants' own perspective, is the network it creates - not the simulation mechanics themselves.</p>
+  </div>
+</section>
+
+<!-- SOCIAL MEDIA -->
+<section class="section alt" id="socialmedia">
+  <div class="sec-label">Section 09</div>
+  <div class="sec-title">Social Media <strong>Performance</strong></div>
+  <div class="sec-desc">Instagram presence tracking from April 2025 (project launch) through April 2026 - 37 posts and 71 stories across the full campaign lifecycle.</div>
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr)">
+    <div class="kpi-cell dk"><div class="kpi-v">279K<span class="kpi-u">+</span></div><div class="kpi-l">Total Views</div><div class="kpi-s">Posts + Stories combined</div></div>
+    <div class="kpi-cell"><div class="kpi-v">3,734</div><div class="kpi-l">Total Likes</div><div class="kpi-s">Across 37 posts</div></div>
+    <div class="kpi-cell"><div class="kpi-v">54,216</div><div class="kpi-l">Top Post Views</div><div class="kpi-s">31 March 2026 · 888 likes</div></div>
+    <div class="kpi-cell"><div class="kpi-v">37</div><div class="kpi-l">Posts Published</div><div class="kpi-s">Apr 2025 – Apr 2026</div></div>
+    <div class="kpi-cell"><div class="kpi-v">71</div><div class="kpi-l">Stories Published</div><div class="kpi-s">36,809 total views</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t">Monthly Post Views - Full Campaign</div>
+      <div class="card-st">April 2025 – April 2026</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chartSMMonthly"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Top 5 Posts by Views</div>
+      <div class="card-st">Posts ranked by reach</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chartSMTop"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-t">Audience Gender</div>
+      <div class="card-st">Average across posts with data</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartSMGender"></canvas>
+        <div class="donut-center"><div class="donut-v" style="font-size:16px">57/43</div><div class="donut-l">F / M split</div></div>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Women - 56.5%</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Men - 43.5%</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Views: Followers vs. Non-followers</div>
+      <div class="card-st">Organic reach proportion (event period)</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartSMReach"></canvas>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Non-followers - ~83% (event peak)</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Followers - ~17%</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Primary View Source (Event Period)</div>
+      <div class="card-st">March 26 – 31, 2026 posts</div>
+      <div class="donut-wrap" style="height:140px">
+        <canvas id="chartSMSource"></canvas>
+      </div>
+      <div class="legend" style="margin-top:.75rem;flex-direction:column;gap:4px">
+        <div class="li"><div class="ld" style="background:#0A1628"></div>Feed - 61% avg</div>
+        <div class="li"><div class="ld" style="background:#C4A35A"></div>Stories - 35% avg</div>
+        <div class="li"><div class="ld" style="background:#D1CFC6"></div>Profile - 4% avg</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIAL & ECONOMIC -->
+<section class="section" id="financial">
+  <div class="sec-label">Section 10</div>
+  <div class="sec-title">Financial &amp; <strong>Economic Impact</strong></div>
+  <div class="sec-desc">Event cost structure and estimated economic injection into the city of Timișoara.</div>
+
+  <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem">Event Cost Breakdown - Estimated</div>
+  <div class="fin-grid">
+    <div class="fin-cell dk">
+      <div class="fin-v">€10,500</div>
+      <div class="fin-l">Catering &amp; Meals</div>
+      <div class="fin-s">€150 × 70 participants</div>
+    </div>
+    <div class="fin-cell">
+      <div class="fin-v">~€5,000</div>
+      <div class="fin-l">Accommodation</div>
+      <div class="fin-s">6 nights · UVT-provided (100 RON/night)</div>
+    </div>
+    <div class="fin-cell">
+      <div class="fin-v">€9,200</div>
+      <div class="fin-l">Travel Reimbursements</div>
+      <div class="fin-s">Up to €200/participant · all transport modes</div>
+    </div>
+    <div class="fin-cell">
+      <div class="fin-v">~€5,000</div>
+      <div class="fin-l">Other Variable Costs</div>
+      <div class="fin-s">Materials, equipment, logistics, venue extras</div>
+    </div>
+  </div>
+
+  <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;margin-top:2rem">Economic Impact - City of Timișoara</div>
+  <div class="g2">
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div class="card-t">Direct Economic Injection</div>
+      <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1;margin:.5rem 0">€30,000<span style="font-size:18px;color:var(--gray-500)">+</span></div>
+      <p style="font-size:12.5px;line-height:1.65;color:var(--text-light)">At a conservative estimate of €100 per participant per day across 6 days (including accommodation, food, transport, leisure, and incidental spending), 70 participants injected approximately €30,000–€42,000 into the Timișoara local economy.</p>
+      <div class="tag-wrap" style="margin-top:1rem">
+        <span class="tag">Restaurants &amp; cafés</span>
+        <span class="tag">Local transport</span>
+        <span class="tag">Retail &amp; souvenirs</span>
+        <span class="tag">Tourism &amp; culture</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">City Visibility Impact</div>
+      <div style="font-size:44px;font-weight:200;color:var(--navy);line-height:1;margin:.5rem 0">15<span style="font-size:20px;color:var(--gray-500)"> countries</span></div>
+      <p style="font-size:12.5px;line-height:1.65;color:var(--text-light)">Participants from 15 countries experienced Timișoara directly - its architecture, Piața Unirii, cultural institutions, and the legacy of its role as a 2023 European Capital of Culture. For the majority, it was their first visit to Romania, making this event an ambassadorial exercise for the city at a European scale.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Accommodation Note</div>
+    <p>Cămin Camelia (primary accommodation) was provided through a partnership with Universitatea de Vest din Timișoara, significantly reducing costs. Market rate for equivalent accommodation in Timișoara: approximately 100 RON/night (≈€20). The university's contribution represents a material in-kind subsidy to the event budget - if valued at market rate for 42 participants × 6 nights, this amounts to approximately €5,000 in kind.</p>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section class="section alt" id="sustainability">
+  <div class="sec-label">Section 11</div>
+  <div class="sec-title">Sustainability &amp; <strong>Responsible Practices</strong></div>
+  <div class="sec-desc">MEU Timișoara 2026 embedded environmental and ethical responsibility across every operational dimension.</div>
+
+  <div class="sus-grid">
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--navy)"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="sus-title">100% Digital Participant Journey</div>
+      <div class="sus-body">9 web platforms replaced all printed materials - guides, programmes, certificates, agreements, and position papers. Zero paper waste from the event's information lifecycle.</div>
+    </div>
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--navy)">
+  <path d="M8.25 4.5l-3.75 3.75 3.75 3.75"/>
+  <path d="M4.5 8.25h9a4.5 4.5 0 014.5 4.5v.75"/>
+  <path d="M15.75 19.5l3.75-3.75-3.75-3.75"/>
+  <path d="M19.5 15.75h-9a4.5 4.5 0 01-4.5-4.5v-.75"/>
+</svg>
+      <div class="sus-title">100% Recyclable Physical Items</div>
+      <div class="sus-body">Participant gifts - bamboo thermos bottles - were fully recyclable and sourced as sustainably produced items. All physical touchpoints were designed with end-of-life in mind.</div>
+    </div>
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--navy)"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
+      <div class="sus-title">Rainforest Alliance Certified Food</div>
+      <div class="sus-body">Food products consumed during the event carried the Rainforest Alliance certification (Green Frog label), confirming sustainable sourcing, environmental standards, and respect for farmers' rights.</div>
+    </div>
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--navy)"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+      <div class="sus-title">Public Transport Integration</div>
+      <div class="sus-body">The participant guide app included a dedicated section with exact public transport routes, stops, and timetables from both accommodation sites to all event venues - actively lowering the barrier to sustainable travel within Timișoara.</div>
+    </div>
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--navy)"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <div class="sus-title">Responsible AI Usage</div>
+      <div class="sus-body">AI tools were permitted exclusively for brainstorming and ideation phases. All amendments, position papers, and final legislative texts were written, argued, and voted on by participants themselves - preserving the authentic educational and democratic value of the simulation.</div>
+    </div>
+    <div class="sus-card">
+      <svg class="sus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--navy)"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="sus-title">Made in Europe Products</div>
+      <div class="sus-body">All physical products and materials used in the event were sourced from European manufacturers - supporting the single market and maintaining supply chain transparency aligned with the event's European values.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Participant Feedback on Sustainability</div>
+    <p>One participant's open response explicitly requested a commitment be renewed for future editions: <em>"DO NOT PRINT - I do not support waste. Also, since it is an Erasmus project, you should remind all participants not to waste food - there were a lot of food waste moments. You should trigger awareness on this, because Erasmus itself is based on sustainability."</em> This represents actionable feedback for 2027 operations.</p>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section class="section" id="recommendations">
+  <div class="sec-label">Section 12</div>
+  <div class="sec-title">Strategic <strong>Recommendations</strong></div>
+  <div class="sec-desc">Synthesised from Q49 (Secretary-General change) and open qualitative responses. Prioritised by frequency of mention and operational feasibility.</div>
+
+  <div class="rec-grid">
+    <div class="rec p1">
+      <div class="rec-pri">Priority 1 · Most Frequently Cited</div>
+      <div class="rec-t">Distribute directive texts before the event - with sufficient lead time</div>
+      <div class="rec-body">This was the dominant structural critique, mentioned directly in 6+ responses and identified as the single highest-priority change by multiple Q49 responses. Participants arrived without access to the full legislative texts, forcing improvised position papers based on general knowledge rather than the specific document. Recommendation: distribute full directive texts, procedural rules, and a written EU institutional guide at minimum 3 weeks before the event.</div>
+    </div>
+    <div class="rec p2">
+      <div class="rec-pri">Priority 2 · First-Timer Onboarding</div>
+      <div class="rec-t">Dedicated preparation pathway for first-time simulation participants</div>
+      <div class="rec-body">40% of respondents were at their first-ever simulation experience. Several described a steep learning curve that resolved only partway through the event. A structured onboarding module - procedural walkthrough, role-specific guide, or mandatory mock session - would close this gap significantly and raise the baseline quality of debate in the first rounds.</div>
+    </div>
+    <div class="rec p3">
+      <div class="rec-pri">Priority 3 · Simulation Technology</div>
+      <div class="rec-t">Real-time vote display screens and expanded Press Corps</div>
+      <div class="rec-body">Multiple respondents requested voting screens displaying MEP/Minister votes in real time - as in the actual European Parliament - to increase procedural authenticity and dramatic engagement. A secondary recommendation: expand the Press Corps to include dedicated reporters for both chambers simultaneously, with real-time reporting shared to group channels.</div>
+    </div>
+    <div class="rec p4">
+      <div class="rec-pri">Priority 4 · Safety &amp; Inclusion</div>
+      <div class="rec-t">Increase Safe Person mechanism visibility and introduce anonymous reporting</div>
+      <div class="rec-body">27% of feedback respondents were unaware of the Safe Person mechanism during the event. Recommendations: (a) explicit introduction at the opening ceremony, (b) visible Safe Person identification throughout all sessions, (c) anonymous per-session or per-group reporting form accessible via the participant app.</div>
+    </div>
+  </div>
+
+  <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem">Additional Operational Improvements Identified</div>
+  <div class="tag-wrap" style="margin-bottom:2rem">
+    <span class="tag gold">Single accommodation venue for all participants</span>
+    <span class="tag gold">Programme backup activities for unplanned delays</span>
+    <span class="tag gold">Cross-chamber ice-breakers (EP ↔ Council)</span>
+    <span class="tag">More legal advisors in-session</span>
+    <span class="tag">Closing shared dinner / final social gathering</span>
+    <span class="tag">More diverse political topic selection</span>
+    <span class="tag">Earlier confirmation of accommodation assignments</span>
+    <span class="tag">Food waste awareness briefing (Erasmus alignment)</span>
+  </div>
+
+  <div class="callout">
+    <div class="callout-l">Context for 2027</div>
+    <p>Across all qualitative responses, a consistent subtext emerges: <em>"the mistakes were expected for a first edition - but they should not be repeated."</em> This is the precise frame the organising team should adopt for 2027 planning. The structural quality of the event - venues, programme design, speaker quality, digital infrastructure, meals, and the simulation itself - was broadly excellent. The improvements that matter are operational and communicational: distribute materials earlier, onboard first-timers more deliberately, and keep the group together.</p>
+  </div>
+</section>
+
+<!-- APPENDIX: DIRECTIVES -->
+<section class="section alt" id="directives">
+  <div class="sec-label">Appendix A</div>
+  <div class="sec-title">Directive <strong>Outcomes</strong></div>
+  <div class="sec-desc">Initial and final versions of both directives, with amendments passed and proposing political groups. This section will be completed with legislative outcome data.</div>
+
+  <div class="g2">
+    <div>
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem">Directive 1 · Schengen Military Hallway</div>
+      <div class="directive-placeholder">
+        <div class="dp-title">Legislative Outcomes - Pending</div>
+        <div class="dp-sub">Initial version · Amendments passed (by political group) · Final adopted text</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem">Directive 2 · MyHealth@EU</div>
+      <div class="directive-placeholder">
+        <div class="dp-title">Legislative Outcomes - Pending</div>
+        <div class="dp-sub">Initial version · Amendments passed (by political group) · Final adopted text</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="fn" style="margin-top:1rem">Data to be added once full amendment records and voting outcomes are compiled. This section will include: initial directive text, amendments proposed, amendments passed (by political group), and final adopted version.</p>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--navy);padding:3rem 4rem;color:rgba(255,255,255,0.65)">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem">
+    <div>
+      <div style="font-size:14px;font-weight:500;color:var(--white);margin-bottom:.5rem">Model European Union Timișoara</div>
+      <div style="font-size:12px;line-height:1.8;color:rgba(255,255,255,0.65)">Impact Report · First Edition · 2026<br>25 – 29 March 2026 · Timișoara, Romania<br>Universitatea de Vest din Timișoara · ICAM</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">Event Leadership</div>
+      <div style="font-size:12px;line-height:1.8;color:rgba(255,255,255,0.75)">Viorel Lambu - Director General<br>Paula Iovescu - Project Manager</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">Under the High Patronage of</div>
+      <div style="font-size:12px;line-height:1.8;color:rgba(255,255,255,0.75)">The European Parliament<br>Co-funded by the Erasmus+ programme<br>of the European Union</div>
+    </div>
+  </div>
+  <div style="border-top:.5px solid rgba(255,255,255,.15);margin-top:2rem;padding-top:1.5rem;font-size:10px;color:rgba(255,255,255,0.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <span>© 2026 Model European Union Timișoara. All rights reserved.</span>
+    <span>Feedback data: N = 22 anonymous responses · 50-question survey · March – April 2026</span>
+  </div>
+</footer>
+
+</div><!-- /main -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+const NAV = '#0A1628', GOLD = '#C4A35A', LGRAY = '#D1CFC6', MGRAY = '#8A8880', MID = '#2D5282';
+
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false } }
+};
+
+function bar(id, labels, data, colors, opts) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 3, borderSkipped: false }] },
+    options: { ...baseOpts, ...opts }
+  });
+}
+
+function hbar(id, labels, data, colors, opts) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 3, borderSkipped: false }] },
+    options: { ...baseOpts, indexAxis: 'y',
+      scales: {
+        x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } } },
+        y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 10.5 } } }
+      }, ...opts }
+  });
+}
+
+function donut(id, labels, data, colors) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '65%' }
+  });
+}
+
+function line(id, labels, data, color) {
+  const el = document.getElementById(id); if (!el) return;
+  new Chart(el, {
+    type: 'line',
+    data: { labels, datasets: [{ data, borderColor: color, backgroundColor: color + '18', fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: color }] },
+    options: { ...baseOpts, scales: {
+      x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 }, maxRotation: 45 } },
+      y: { grid: { color: '#F0EFEB' }, ticks: { color: MGRAY, font: { size: 10 } } }
+    }}
+  });
+}
+
+// Country chart
+hbar('chartCountry',
+  ['Romania','Spain','Poland','France','Portugal','Italy','N. Macedonia','Others'],
+  [15, 7, 6, 5, 5, 5, 3, 7],
+  [NAV, GOLD, MID, NAV, GOLD, MID, LGRAY, LGRAY],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } }, max: 18 }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 11 } } } } }
+);
+
+// Roles donut
+donut('chartRoles', ['EP MEPs','Council','Content/Org'], [26, 17, 27], [NAV, GOLD, LGRAY]);
+
+// Accommodation
+donut('chartAccom', ['Cămin Camelia','FITT','Own'], [36, 6, 11], [NAV, GOLD, LGRAY]);
+
+// Erasmus
+donut('chartErasmus', ['Erasmus+','Meals only','Non-Erasmus'], [43, 1, 9], [NAV, GOLD, LGRAY]);
+
+// Experience
+donut('chartExp', ['First time','1-2 prev','3+ prev'], [9, 10, 3], [NAV, GOLD, LGRAY]);
+
+// Preparation Q7
+hbar('chartPrep',
+  ['Fully prepared','Mostly prepared','Partially prepared','Felt lost'],
+  [7, 8, 6, 1],
+  [NAV, MID, GOLD, '#C4853A'],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } }, max: 10 }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 10.5 } } } } }
+);
+
+// Q8 EU understanding
+hbar('chartEU',
+  ['5 - Genuinely illuminating','4 - Meaningfully better','3 - Clearer picture','2 - Marginal improvement'],
+  [7, 7, 5, 3],
+  [NAV, MID, GOLD, LGRAY],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } }, max: 10 }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 10.5 } } } } }
+);
+
+// Workshop integration Q16
+donut('chartWorkshopInt', ['Directly improved','Somewhat','Disconnected'], [12, 9, 1], [NAV, GOLD, LGRAY]);
+
+// Guide usage Q33
+donut('chartGuide', ['Frequently','Occasionally','Rarely','Never'], [19, 1, 1, 1], [NAV, MID, LGRAY, '#D1CFC6']);
+
+// PWA Q35
+donut('chartPWA', ['Added & convenient','Browser link','Didnt know'], [11, 9, 2], [NAV, GOLD, LGRAY]);
+
+// Print Q37
+donut('chartPrint', ['Digital only','Printed complement','Preferred printed'], [18, 3, 1], [NAV, GOLD, LGRAY]);
+
+// Diet Q26
+donut('chartDiet', ['Fully accommodated','No requirements'], [19, 3], [NAV, LGRAY]);
+
+// Transport Q24
+donut('chartTransport', ['Very easy','Minor confusion','No transport used'], [8, 2, 12], [NAV, GOLD, LGRAY]);
+
+// Safe Person Q21
+donut('chartSafe', ['Felt more secure','Neutral, appreciated','Not aware'], [13, 4, 5], [NAV, GOLD, LGRAY]);
+
+// Social events attendance
+hbar('chartSocialAtt',
+  ['Gala Night','Karaoke Night','#altfelclub','Football Match','Did not attend'],
+  [19, 17, 15, 8, 3],
+  [NAV, MID, GOLD, LGRAY, '#E0DDD6'],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } }, max: 22 }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 11 } } } } }
+);
+
+// Expectations donut
+donut('chartExpectations', ['Exceeded','Met','Partial'], [11, 10, 1], [NAV, GOLD, LGRAY]);
+
+// Rating distribution
+bar('chartRatingDist',
+  ['6','7','8','9','10'],
+  [1, 2, 4, 5, 10],
+  [LGRAY, LGRAY, MID, NAV, NAV],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 11 } } }, y: { grid: { color: '#F0EFEB' }, ticks: { color: MGRAY, font: { size: 10 }, stepSize: 2 } } } }
+);
+
+// Skills Q39 - pre-computed colors
+const skillData = [19,18,18,18,17,17,15,14,14,12,12,12,12,2];
+const skillColors = skillData.map(d => d >= 17 ? NAV : d >= 14 ? MID : d >= 12 ? GOLD : LGRAY);
+const skillEl = document.getElementById('chartSkills');
+if (skillEl) {
+  new Chart(skillEl, {
+    type: 'bar',
+    data: {
+      labels: ['Formal public speaking','Active listening','Research & analysis','Negotiation','Persuasive argumentation','Policy drafting & amendments','Critical thinking','Cross-cultural collaboration','Professional networking','Strategic coalition-building','Working under time pressure','Leadership','Adaptability & problem-solving','Journalistic writing'],
+      datasets: [{ data: skillData, backgroundColor: skillColors, borderRadius: 3, borderSkipped: false }]
+    },
+    options: { ...baseOpts, indexAxis: 'y', scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 } }, max: 22 }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 11 } } } } }
+  });
+}
+
+// Social media monthly
+line('chartSMMonthly',
+  ['Apr\'25','May','Jun','Sep','Oct','Nov','Dec','Jan\'26','Feb','Mar','Apr'],
+  [0, 5070, 5519, 6218, 6665, 17783, 6794, 27861, 22039, 143379, 923],
+  NAV
+);
+// Override y-axis ticks to K format after creation
+const smMonthlyEl = document.getElementById('chartSMMonthly');
+if (smMonthlyEl) {
+  const existingChart = Chart.getChart(smMonthlyEl);
+  if (existingChart) {
+    existingChart.options.scales.y.ticks.callback = v => v >= 1000 ? Math.round(v/1000) + 'K' : v;
+    existingChart.update();
+  }
+}
+
+// Top 5 posts
+hbar('chartSMTop',
+  ['31 Mar (recap)','3 Feb','2 Mar','28 Mar','27 Mar'],
+  [54216, 19322, 19315, 17489, 10353],
+  [NAV, MID, MID, GOLD, GOLD],
+  { scales: { x: { grid: { display: false }, ticks: { color: MGRAY, font: { size: 10 }, callback: v => v >= 1000 ? Math.round(v/1000) + 'K' : v } }, y: { grid: { display: false }, ticks: { color: '#4A4845', font: { size: 10.5 } } } } }
+);
+
+// Gender
+donut('chartSMGender', ['Women','Men'], [56.5, 43.5], [NAV, GOLD]);
+
+// Reach followers vs non
+donut('chartSMReach', ['Non-followers','Followers'], [83, 17], [NAV, LGRAY]);
+
+// Source of views
+donut('chartSMSource', ['Feed','Stories','Profile'], [61, 35, 4], [NAV, GOLD, LGRAY]);
+
+// ACTIVE NAV LINK on scroll
+const sections = document.querySelectorAll('section[id], footer');
+const links = document.querySelectorAll('.sb-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+
+});
+</script>
+</body>
+</html>
